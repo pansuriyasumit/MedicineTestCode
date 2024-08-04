@@ -1,0 +1,40 @@
+package com.fifteen11.checkappversion.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+val AppColor = Color(0xFF21D0C3)
+val PrimaryColor = Color(0xFF484BF1)
+val SecondaryColor = Color(0xFF673AB7)
+val BlackColor = Color(0xFF212121)
+val WhiteColor = Color(0xFFFFFFFF)
+val ErrorColor = Color(0xFFFF0000)
+val SuccessColor = Color(0xFF00FF00)
+val WarningColor = Color(0xFFFFCC00)
+val InfoColor = Color(0xFF00FFFF)
+val DarkColor = Color(0xFF222222)
+val LightColor = Color(0xFFEEEEEE)
+val TransparentColor = Color(0x00000000)
+val DisabledColor = Color(0xFF999999)
+val PlaceholderColor = Color(0xFFCCCCCC)
+val BackgroundColor = Color(0xFFF5F5F5)
+val SurfaceColor = Color(0xFFFFFFFF)
+val OnPrimaryColor = Color(0xFFFFFFFF)
+val OnSecondaryColor = Color(0xFFFFFFFF)
+val OnBackgroundColor = Color(0xFF000000)
+val OnSurfaceColor = Color(0xFF000000)
+val OnSurfaceVariantColor = Color(0xFF000000)
+val OnErrorColor = Color(0xFFFFFFFF)
+val OnWarningColor = Color(0xFFFFFFFF)
+val OnInfoColor = Color(0xFFFFFFFF)
+val OnDisabledColor = Color(0xFF999999)
+val OnPlaceholderColor = Color(0xFFCCCCCC)
+val OnBackgroundVariantColor = Color(0xFF000000)
+
+
+val Purple80 = Color(0xFFD0BCFF)
+val PurpleGrey80 = Color(0xFFCCC2DC)
+val Pink80 = Color(0xFFEFB8C8)
+
+val Purple40 = Color(0xFF6650a4)
+val PurpleGrey40 = Color(0xFF625b71)
+val Pink40 = Color(0xFF7D5260)

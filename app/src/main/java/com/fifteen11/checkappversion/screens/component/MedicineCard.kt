@@ -17,12 +17,12 @@ import com.fifteen11.checkappversion.ui.theme.DisabledColor
 import com.fifteen11.checkappversion.ui.theme.ProblemCardTitle
 
 @Composable
-fun MedicineCard(medicine: ProblemsItem?, onClick: (problem: ProblemsItem) -> Unit = {}) {
+fun MedicineCard(medicine: ProblemsItem?, onClick: (problemId: Int) -> Unit = {}) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick(medicine ?: ProblemsItem()) },
+            .clickable { medicine?.id?.let { onClick(it) } },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
     ) {

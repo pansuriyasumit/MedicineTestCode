@@ -1,5 +1,6 @@
 package com.fifteen11.checkappversion.viewmodel
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.fifteen11.checkappversion.data.GreetingEnums
 import com.fifteen11.checkappversion.data.model.AssociatedDrugType1Item
 import com.fifteen11.checkappversion.data.model.DrugsNameItem
@@ -18,10 +19,15 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
+import java.io.IOException
 import java.time.Clock
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -30,6 +36,10 @@ import java.time.ZoneOffset
 
 @ExperimentalCoroutinesApi
 class HomeViewModelTest {
+
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var viewModel: HomeViewModel
     private lateinit var medicineDataRepository: MedicineDataRepositoryImpl
     private lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -80,18 +90,11 @@ class HomeViewModelTest {
             status = 200,
             code = 200,
             message = "Success",
-            problems = listOf(
-                ProblemsItem(
-                    id = 1,
-                    type = "Problem Type",
-                    medications = listOf(
-                        MedicationsItem(
-                            medicationsClasses = listOf(
-                                MedicationsClassesItem(
-                                    drugsName = listOf(
-                                        DrugsNameItem(
-                                            associatedDrugType1 = listOf(
-                                                AssociatedDrugType1Item(
+            problems = listOf(ProblemsItem(id = 1, type = "Problem Type",
+                    medications = listOf(MedicationsItem(
+                            medicationsClasses = listOf(MedicationsClassesItem(
+                                    drugsName = listOf(DrugsNameItem(
+                                            associatedDrugType1 = listOf(AssociatedDrugType1Item(
                                                     name = "Drug Name 1",
                                                     dose = "500mg",
                                                     strength = "1 tablet"
@@ -110,24 +113,26 @@ class HomeViewModelTest {
 
         viewModel.fetchMedicines()
 
-        val actual = viewModel.medicines.first()
-        assertEquals(expected, actual.medicines)
-        assertEquals(false, actual.isLoading)
-        assertEquals(null, actual.error)
+        val uiState = viewModel.medicines.first()
+        assertFalse(uiState.isLoading)
+        assertNull(uiState.error)
+        assertEquals(expected, uiState.medicines)
     }
 
     @Test
-    fun `fetchMedicines updates uiState with error message on exception`() =
-        runTest {
-            val exception = Exception("Test exception")
-            whenever(medicineDataRepository.getMedicinesFormAPI()).thenThrow(exception)
+    fun `fetchMedicines should update uiState with error on failure`() = runTest {
+        // Use doAnswer to handle the exception
+        doAnswer {
+            throw IOException("Network error")
+        }.whenever(medicineDataRepository).getMedicinesFormAPI()
 
-            viewModel.fetchMedicines()
+        viewModel.fetchMedicines()
 
-            val actual = viewModel.medicines.first()
-            assertEquals("An unexpected error occurred", actual.error)
-            assertEquals(false, actual.isLoading)
-        }
+        val uiState = viewModel.medicines.value
+        assertFalse(uiState.isLoading)
+        assertEquals("Network error", uiState.error)
+        assertNull(uiState.medicines) // Expecting null because of error
+    }
 
     @Test
     fun `clearUserData calls clearPreferenceData on SharedPreferenceManager`() =

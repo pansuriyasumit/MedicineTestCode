@@ -8,14 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.fifteen11.checkappversion.navigation.SetupNavGraph
 import com.fifteen11.checkappversion.ui.theme.CheckAppVersionTheme
-import com.fifteen11.checkappversion.viewmodel.HomeViewModel
-import com.fifteen11.checkappversion.viewmodel.LoginViewModel
 import com.fifteen11.checkappversion.viewmodel.MainViewModel
-import com.fifteen11.checkappversion.viewmodel.UserHistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,24 +18,13 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var navController: NavHostController
-    private val loginViewModel by viewModels<LoginViewModel>()
-    private val homeViewModel by viewModels<HomeViewModel>()
-    private val historyViewModel by viewModels<UserHistoryViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupSplashScreen()
 
         setContent {
             MyApp {
-                navController = rememberNavController()
-                SetupNavGraph(
-                    navController,
-                    loginViewModel,
-                    homeViewModel = homeViewModel,
-                    historyViewModel = historyViewModel
-                )
+                SetupNavGraph()
             }
         }
     }

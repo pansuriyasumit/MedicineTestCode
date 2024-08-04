@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fifteen11.checkappversion.data.local.UserLoginHistoryEntity
 import com.fifteen11.checkappversion.navigation.Route
@@ -35,7 +36,7 @@ import com.fifteen11.checkappversion.utils.DateUtil.convertDateString
 import com.fifteen11.checkappversion.viewmodel.UserHistoryViewModel
 
 @Composable
-fun UserLoginHistory(historyViewModel: UserHistoryViewModel) {
+fun UserLoginHistory(historyViewModel: UserHistoryViewModel = hiltViewModel()) {
 
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 

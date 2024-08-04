@@ -21,7 +21,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.fifteen11.checkappversion.ui.theme.AppColor
-import com.fifteen11.checkappversion.ui.theme.PrimaryColor
 import com.fifteen11.checkappversion.ui.theme.SecondaryColor
 
 @Composable
@@ -29,7 +28,7 @@ fun OutlinedTextFieldComponent(
     labelText: String,
     placeholderText: String,
     leadingIcon: ImageVector,
-    trailingIcon: @Composable() (() -> Unit)?,
+    trailingIcon: @Composable (() -> Unit)?,
     imeAction: ImeAction,
     keyboardType: KeyboardType,
     keyboardActions: KeyboardActions,

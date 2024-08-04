@@ -19,6 +19,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import java.util.Date
 
 @ExperimentalCoroutinesApi
 class LoginViewModelTest {
@@ -55,10 +56,11 @@ class LoginViewModelTest {
 
     @Test
     fun `insertLoginHistory inserts provided username when not empty`() = runTest {
-        val username = "testuser"
+        val username = "Admin User"
+        val createdDate = Date(System.currentTimeMillis())
         viewModel.onUsernameChanged(username)
         viewModel.insertLoginHistory()
-        verify(userRepository).insertUserLoginHistory(UserLoginHistoryEntity(userName = username))
+        verify(userRepository).insertUserLoginHistory(UserLoginHistoryEntity(userName = username, createdAt = createdDate))
     }
 
     @Test

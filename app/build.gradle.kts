@@ -134,11 +134,16 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockwebserver)
 
+    androidTestImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.mockito.android)
     androidTestImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.retrofit.mock)
 
     androidTestImplementation(libs.androidx.espresso.intents)
     androidTestImplementation(libs.androidx.espresso.idling.resource)

@@ -17,7 +17,6 @@ import java.time.Clock
 import java.time.LocalTime
 import javax.inject.Inject
 
-
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val medicineDataRepository: MedicineDataRepositoryImpl,
@@ -25,7 +24,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     data class UiState(
-        val medicines: MedicineResponse = MedicineResponse(),
+        var medicines: MedicineResponse? = MedicineResponse(),
         val isLoading: Boolean = false,
         val error: String? = null
     )
@@ -33,10 +32,6 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UiState())
     val medicines: StateFlow<UiState>
         get() = _uiState.asStateFlow()
-
-    init {
-        fetchMedicines()
-    }
 
     fun getGreetingMessage(clock: Clock = Clock.systemDefaultZone()): String {
         val currentHour = LocalTime.now(clock).hour
@@ -62,6 +57,7 @@ class HomeViewModel @Inject constructor(
                 val response = medicineDataRepository.getMedicinesFormAPI()
                 _uiState.value = _uiState.value.copy(medicines = response, isLoading = false)
             } catch (e: IOException) {
+                _uiState.value.medicines = null
                 _uiState.value = _uiState.value.copy(error = "Network error", isLoading = false)
             } catch (e: HttpException) {
                 _uiState.value = _uiState.value.copy(error = "API error", isLoading = false)

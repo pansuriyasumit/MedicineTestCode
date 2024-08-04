@@ -1,5 +1,6 @@
 package com.fifteen11.checkappversion.screens.login
 
+import android.app.Activity
 import android.content.pm.ActivityInfo
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fifteen11.checkappversion.R
 import com.fifteen11.checkappversion.screens.component.GradientButtonComponent
 import com.fifteen11.checkappversion.screens.component.LockScreenOrientation
@@ -54,14 +57,9 @@ import com.fifteen11.checkappversion.viewmodel.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel,
+    loginViewModel: LoginViewModel = hiltViewModel(),
     onLogin: () -> Unit
 ) {
-
-    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-    BackHandler {
-        backDispatcher?.onBackPressed()
-    }
 
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -202,6 +200,9 @@ fun LoginScreen(
             }
         }
     }
+
+    val context = LocalContext.current
+    BackHandler { (context as? Activity)?.finish() }
 }
 
 

@@ -8,7 +8,10 @@ sealed class Route(
 ) {
     data object LoginScreen : Route(routeName = "login_screen", title = "Login")
     data object HomeScreen : Route(routeName = "Home_Screen", title = "Home")
-    data object DetailsScreen : Route(routeName = "Details_Screen", title = "Medicine Details")
+
+    data object DetailsScreen :
+        Route(routeName = "Details_Screen/{problemsItem}", title = "Details")
+
     data object UserLoginHistoryScreen :
         Route(routeName = "Login_History_Screen", title = "Login History")
 }
